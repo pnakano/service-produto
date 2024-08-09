@@ -14,25 +14,21 @@ import org.springframework.web.bind.annotation.*;
 public class ProdutoControllerImpl implements ProdutoController {
 
     private final ProdutoService produtoService;
-    private final ModelMapper modelMapper;
 
-    public ProdutoControllerImpl(ProdutoService produtoService, ModelMapper modelMapper) {
+    public ProdutoControllerImpl(ProdutoService produtoService) {
         this.produtoService = produtoService;
-        this.modelMapper = modelMapper;
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ProdutoResponseDto inserir(@Valid @RequestBody ProdutoPersistDto dto){
+    public Produto inserir(@Valid @RequestBody ProdutoPersistDto dto){
         Produto produto = new Produto(dto.getDescricao(), dto.getValor());
-        Produto produtoPersistido = produtoService.inserir(produto);
-        return modelMapper.map(produtoPersistido, ProdutoResponseDto.class);
+        return produtoService.inserir(produto);
     }
 
     @GetMapping("{id}")
-    public ProdutoResponseDto findById(@PathVariable("id") Long id){
-        var produto = produtoService.one(id);
-        return modelMapper.map(produto, ProdutoResponseDto.class);
+    public Produto findById(@PathVariable("id") Long id){
+        return produtoService.findById(id);
     }
 
 }

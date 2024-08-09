@@ -15,7 +15,7 @@ public class ProdutoServiceImpl implements ProdutoService {
     }
 
     @Override
-    public Produto one(Long id) {
+    public Produto findById(Long id) {
         return produtoRepository.findById(id)
                 .orElseThrow(() -> new NoResultException(String.format("Produto de código %d não encontrado", id)));
     }

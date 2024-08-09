@@ -16,7 +16,7 @@ public interface ProdutoController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ProdutoResponseDto inserir(@Valid @RequestBody ProdutoPersistDto dto);
+    public Produto inserir(@Valid @RequestBody ProdutoPersistDto dto);
 
     @Operation(summary = "Retorna o produto correspondente ao identificador recuperado por parâmetro")
     @ApiResponses(value = {
@@ -37,6 +37,6 @@ public interface ProdutoController {
             )
     })
     @GetMapping("{id}")
-    public ProdutoResponseDto findById(@PathVariable("id") Long id);
+    public Produto findById(@PathVariable("id") Long id);
 
 }
