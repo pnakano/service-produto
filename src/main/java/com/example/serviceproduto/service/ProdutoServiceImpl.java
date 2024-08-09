@@ -1,8 +1,11 @@
 package com.example.serviceproduto.service;
 
+import com.example.serviceproduto.event.ProdutoPersistEvent;
 import com.example.serviceproduto.model.Produto;
 import com.example.serviceproduto.repository.ProdutoRepository;
 import jakarta.persistence.NoResultException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -10,8 +13,11 @@ public class ProdutoServiceImpl implements ProdutoService {
 
     private final ProdutoRepository produtoRepository;
 
-    public ProdutoServiceImpl(ProdutoRepository produtoRepository) {
+    private final ApplicationEventPublisher applicationEventPublisher;
+
+    public ProdutoServiceImpl(ProdutoRepository produtoRepository, ApplicationEventPublisher applicationEventPublisher) {
         this.produtoRepository = produtoRepository;
+        this.applicationEventPublisher = applicationEventPublisher;
     }
 
     @Override
@@ -22,7 +28,9 @@ public class ProdutoServiceImpl implements ProdutoService {
 
     @Override
     public Produto save(Produto produto) {
-        return produtoRepository.save(produto);
+        Produto produtoPersist = produtoRepository.save(produto);
+        applicationEventPublisher.publishEvent(new ProdutoPersistEvent(this, produtoPersist));
+        return produtoPersist;
     }
 
     @Override
@@ -39,7 +47,7 @@ public class ProdutoServiceImpl implements ProdutoService {
             throw new NoResultException(String.format("Produto de código %d não encontrado", produto.getId()));
         }
 
-        return produtoRepository.save(produto);
+        return save(produto);
     }
 
 }
