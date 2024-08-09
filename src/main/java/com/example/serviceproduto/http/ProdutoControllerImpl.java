@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("produto")
-public class ProdutoControllerImpl {
+public class ProdutoControllerImpl implements ProdutoController {
 
     private final ProdutoService produtoService;
     private final ModelMapper modelMapper;
