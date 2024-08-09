@@ -1,8 +1,8 @@
 package com.example.serviceproduto.http;
 
 import com.example.serviceproduto.http.data.request.ProdutoPersistDto;
-import com.example.serviceproduto.http.data.response.ProdutoResponseDto;
 import com.example.serviceproduto.model.Produto;
+import com.github.fge.jsonpatch.JsonPatch;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
@@ -16,7 +16,7 @@ public interface ProdutoController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Produto inserir(@Valid @RequestBody ProdutoPersistDto dto);
+    Produto save(@Valid @RequestBody ProdutoPersistDto dto);
 
     @Operation(summary = "Retorna o produto correspondente ao identificador recuperado por parâmetro")
     @ApiResponses(value = {
@@ -36,7 +36,17 @@ public interface ProdutoController {
                     )
             )
     })
+
     @GetMapping("{id}")
-    public Produto findById(@PathVariable("id") Long id);
+    Produto findById(@PathVariable("id") Long id);
+
+    @PatchMapping("{id}")
+    Produto update(@PathVariable("id") Long id, @RequestBody JsonPatch patch);
+
+    @DeleteMapping("{id}")
+    void delete(@PathVariable("id") Long id);
+
+    @PutMapping("{id}")
+    Produto updateAll(@PathVariable("id") Long id, @RequestBody ProdutoPersistDto dto);
 
 }
