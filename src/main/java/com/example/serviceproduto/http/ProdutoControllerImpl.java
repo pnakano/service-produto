@@ -4,6 +4,7 @@ import com.example.serviceproduto.http.data.request.ProdutoPersistDto;
 import com.example.serviceproduto.http.data.response.ProdutoResponseDto;
 import com.example.serviceproduto.model.Produto;
 import com.example.serviceproduto.service.ProdutoService;
+import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,7 @@ public class ProdutoControllerImpl {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ProdutoResponseDto inserir(@RequestBody ProdutoPersistDto dto){
+    public ProdutoResponseDto inserir(@Valid @RequestBody ProdutoPersistDto dto){
         Produto produto = new Produto(dto.getDescricao(), dto.getValor());
         Produto produtoPersistido = produtoService.inserir(produto);
         return modelMapper.map(produtoPersistido, ProdutoResponseDto.class);
