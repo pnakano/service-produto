@@ -85,6 +85,22 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+				<groupId>com.google.cloud.tools</groupId>
+				<artifactId>jib-maven-plugin</artifactId>
+				<version>3.3.2</version>
+				<configuration>
+					<from>
+						<image>openjdk:22-jdk</image>
+					</from>
+					<to>
+						<image>service-produto/produto:${project.version}</image>
+					</to>
+					<container>
+						<mainClass>com.example.serviceproduto.ServiceProdutoApplication</mainClass>
+					</container>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
