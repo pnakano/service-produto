@@ -14,15 +14,3 @@ services:
     expose:
       - 61616
       - 8161
-
-  produto:
-    container_name: produto
-    image: service-produto/produto:0.0.1-SNAPSHOT
-    environment:
-      JMS_HOST: jms
-    ports:
-      - 8080:8080
-    expose:
-      - 8080
-    depends_on:
-      - jms
