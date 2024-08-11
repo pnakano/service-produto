@@ -16,7 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("produto")
+@RequestMapping("/")
 public class ProdutoControllerImpl implements ProdutoController {
 
     private final ProdutoService produtoService;
